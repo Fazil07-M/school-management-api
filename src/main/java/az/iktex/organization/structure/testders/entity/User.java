@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 @Entity
 @Table(name = "users")
 public class User {
-// user_id unikal olmalıdır, çünki OneToOne əlaqəsində bir istifadəçiyə yalnız bir pasport uyğun gəlir.
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,13 +28,22 @@ public class User {
     private String email;
 
     @Convert(converter = GenderConverter.class)
-    @Column(nullable = false)
+    @Column(name = "gender_id", nullable = false)
     private Gender gender;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
     private Passport passport;
 
     public void setPassport(Passport passport) {
+        if (this.passport != null && this.passport != passport) {
+            this.passport.setUser(null);
+        }
+
         this.passport = passport;
 
         if (passport != null && passport.getUser() != this) {

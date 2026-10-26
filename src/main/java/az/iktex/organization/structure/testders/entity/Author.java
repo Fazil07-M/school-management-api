@@ -28,10 +28,13 @@ public class Author {
     @Column(name = "country", length = 50)
     private String country;
 
+    // Müəllif silindikdə ona aid AuthorBook qeydləri də silinir.
+    // Kitabların özü isə verilənlər bazasında qalır.
     @OneToMany(
-        mappedBy = "author",
-        cascade = CascadeType.REMOVE,
-        orphanRemoval = true
+            mappedBy = "author",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
     )
     private List<AuthorBook> authorBooks = new ArrayList<>();
 }

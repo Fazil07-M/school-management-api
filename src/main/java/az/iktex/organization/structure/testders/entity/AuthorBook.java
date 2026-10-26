@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(
-    name = "author_book",
-    uniqueConstraints = {
-        @UniqueConstraint(
-            name = "uk_author_book",
-            columnNames = {"author_id", "book_id"}
-        )
-    }
+        name = "author_book",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_author_book",
+                        columnNames = {"author_id", "book_id"}
+                )
+        }
 )
 public class AuthorBook {
 
@@ -24,19 +24,21 @@ public class AuthorBook {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Hər bir əlaqə mütləq bir müəllifə aid olmalıdır.
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
-        name = "author_id",
-        nullable = false,
-        foreignKey = @ForeignKey(name = "fk_ab_author")
+            name = "author_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_ab_author")
     )
     private Author author;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Hər bir əlaqə mütləq bir kitaba aid olmalıdır.
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
-        name = "book_id",
-        nullable = false,
-        foreignKey = @ForeignKey(name = "fk_ab_book")
+            name = "book_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_ab_book")
     )
     private Book book;
 }

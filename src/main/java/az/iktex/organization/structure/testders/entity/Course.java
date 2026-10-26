@@ -1,4 +1,3 @@
-
 package az.iktex.organization.structure.testders.entity;
 
 import jakarta.persistence.*;
@@ -29,7 +28,8 @@ public class Course {
     @Column(name = "teacher", nullable = false, length = 50)
     private String teacher;
 
-    // Cascade yoxdur, çünki Course vasitəsilə Student obyektlərinin həyat dövrü idarə edilməməlidir.
-    @ManyToMany(mappedBy = "courses")
+  
+    
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
     private Set<Student> students = new HashSet<>();
 }

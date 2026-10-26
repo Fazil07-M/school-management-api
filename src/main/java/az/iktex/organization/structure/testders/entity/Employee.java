@@ -1,4 +1,3 @@
-
 package az.iktex.organization.structure.testders.entity;
 
 import jakarta.persistence.*;
@@ -13,30 +12,33 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(
-    name = "employees",
-    check = @CheckConstraint(
-        name = "chk_employee_salary_positive",
-        constraint = "salary > 0"
-    )
+        name = "employees",
+        check = @CheckConstraint(
+                name = "chk_employee_salary",
+                constraint = "salary > 0"
+        )
 )
-
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Column(name = "salary", nullable = false, precision = 12, scale = 2)
-    private BigDecimal salary;
-// BigDecimal pul dəyərlərində dəqiq hesablamalar aparmaq üçün istifadə olunur.
+    @Column(name = "surname", nullable = false, length = 50)
+    private String surname;
 
-// Cascade seçilmir, çünki işçi silindikdə şöbə silinməməlidir.
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id",
-        foreignKey = @ForeignKey(name = "fk_employees_department")
+    @Column(name = "salary", nullable = false, precision = 10, scale = 2)
+    private BigDecimal salary;
+
+    // İşçi silindikdə şöbə silinməməlidir.
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+            name = "department_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_employee_department")
     )
     private Department department;
 }

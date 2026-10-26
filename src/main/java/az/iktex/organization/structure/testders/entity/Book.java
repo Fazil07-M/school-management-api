@@ -14,12 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(
-    name = "books",
-    uniqueConstraints = {},
-    check = @CheckConstraint(
-        name = "chk_book_price",
-        constraint = "price >= 0"
-    )
+        name = "books",
+        check = @CheckConstraint(
+                name = "chk_book_price",
+                constraint = "price >= 0"
+        )
 )
 public class Book {
 
@@ -36,10 +35,13 @@ public class Book {
     @Column(name = "page_count", nullable = false)
     private Integer pageCount;
 
+    // Müəllif-kitab əlaqələrinin həyat dövrünü kitab idarə edir.
+    // Kitab silindikdə ona aid AuthorBook qeydləri də silinir.
     @OneToMany(
-        mappedBy = "book",
-        cascade = CascadeType.REMOVE,
-        orphanRemoval = true
+            mappedBy = "book",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
     )
     private List<AuthorBook> authorBooks = new ArrayList<>();
 }

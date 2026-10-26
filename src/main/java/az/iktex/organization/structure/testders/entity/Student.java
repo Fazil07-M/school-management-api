@@ -1,4 +1,3 @@
-
 package az.iktex.organization.structure.testders.entity;
 
 import jakarta.persistence.*;
@@ -29,24 +28,27 @@ public class Student {
     @Column(name = "age", nullable = false)
     private Integer age;
 
-    @ManyToMany(cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE
-    })
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            fetch = FetchType.LAZY
+    )
     @JoinTable(
-        name = "student_course",
-        joinColumns = @JoinColumn(
-            name = "student_id",
-            foreignKey = @ForeignKey(name = "fk_sc_student")
-        ),
-        inverseJoinColumns = @JoinColumn(
-            name = "course_id",
-            foreignKey = @ForeignKey(name = "fk_sc_course")
-        ),
-        uniqueConstraints = @UniqueConstraint(
-            name = "uk_student_course",
-            columnNames = {"student_id", "course_id"}
-        )
+            name = "student_course",
+            joinColumns = @JoinColumn(
+                    name = "student_id",
+                    foreignKey = @ForeignKey(name = "fk_sc_student")
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "course_id",
+                    foreignKey = @ForeignKey(name = "fk_sc_course")
+            ),
+            uniqueConstraints = @UniqueConstraint(
+                    name = "uk_student_course",
+                    columnNames = {"student_id", "course_id"}
+            )
     )
     private Set<Course> courses = new HashSet<>();
 

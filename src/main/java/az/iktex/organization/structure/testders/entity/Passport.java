@@ -1,19 +1,12 @@
 package az.iktex.organization.structure.testders.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.JoinColumn;
 
-
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -28,22 +21,28 @@ public class Passport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "passport_number", nullable = false)
-    private String passportNumber;
-// user_id unikal olmalıdır, çünki OneToOne əlaqəsində bir istifadəçiyə yalnız bir pasport uyğun gəlir.
-    @OneToOne
+    @Column(name = "serial_number", nullable = false, unique = true, length = 20)
+    private String serialNumber;
+
+    @Column(name = "issue_date", nullable = false)
+    private LocalDate issueDate;
+
+    @Column(nullable = false, length = 50)
+    private String country;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
-        name = "user_id",
-        unique = true,
-        foreignKey = @ForeignKey(name = "fk_passports_user"),
-        nullable = false
+            name = "user_id",
+            unique = true,
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_passport_user")
     )
     private User user;
 
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
-        
-        if (user !=null && user.getPassport()!= this) {
+
+        if (user != null && user.getPassport() != this) {
             user.setPassport(this);
         }
     }

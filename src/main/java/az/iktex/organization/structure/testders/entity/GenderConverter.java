@@ -12,10 +12,7 @@ public class GenderConverter implements AttributeConverter<Gender, Integer> {
             return null;
         }
 
-        return switch (gender) {
-            case MALE -> 1;
-            case FEMALE -> 2;
-        };
+        return gender.getDbCode();
     }
 
     @Override
@@ -24,13 +21,6 @@ public class GenderConverter implements AttributeConverter<Gender, Integer> {
             return null;
         }
 
-        return switch (value) {
-            case 1 -> Gender.MALE;
-            case 2 -> Gender.FEMALE;
-            default -> throw new IllegalArgumentException(
-                "Naməlum gender dəyəri: " + value
-            );
-        };
+        return Gender.findByDbCode(value);
     }
 }
-
