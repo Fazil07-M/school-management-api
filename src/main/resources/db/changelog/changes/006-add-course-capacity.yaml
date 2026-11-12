@@ -1,0 +1,31 @@
+databaseChangeLog:
+
+  # 006-1: Courses cedveline capacity sutununun elave edilmesi
+  - changeSet:
+      id: 006-1
+      author: Fazil07-M
+      changes:
+        - addColumn:
+            tableName: courses
+            columns:
+              - column:
+                  name: capacity
+                  type: INTEGER
+                  defaultValueNumeric: 30
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropColumn:
+            tableName: courses
+            columnName: capacity
+
+  # 006-2: Course capacity ucun CHECK mehdudiyyeti
+  - changeSet:
+      id: 006-2
+      author: Fazil07-M
+      changes:
+        - sql:
+            sql: ALTER TABLE courses ADD CONSTRAINT chk_course_capacity CHECK (capacity > 0);
+      rollback:
+        - sql:
+            sql: ALTER TABLE courses DROP CONSTRAINT chk_course_capacity;

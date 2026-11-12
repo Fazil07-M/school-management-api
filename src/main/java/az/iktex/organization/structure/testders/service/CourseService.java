@@ -44,7 +44,7 @@ public class CourseService {
     // ID üzrə kursu tapır.
     public CourseResponse getCourseById(Long id) {
 
-        Course course = courseRepository.findByIdWithStudents(id)
+        Course course = courseRepository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Kurs tapılmadı"));
 

@@ -24,7 +24,8 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final StudentMapper studentMapper;
-
+    private final EnrollmentService enrollmentService;
+    
     // Yeni tələbə yaradır.
     @Transactional
     public StudentResponse createStudent(StudentRequest request) {
@@ -82,6 +83,8 @@ public class StudentService {
             throw new IllegalStateException(
                     "Tələbə artıq bu kursa yazılıb");
         }
+
+        enrollmentService.reserveSeat(courseId);
 
         student.addCourse(course);
 
@@ -141,4 +144,80 @@ public class StudentService {
 
         studentRepository.delete(student);
     }
+
+    @Transactional(isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
+    public StudentResponse enrollWithRepeatableRead(
+            Long studentId,
+            Long courseId,
+            long delayMs) {
+
+        Student student = studentRepository.findByIdWithCourses(studentId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Tələbə tapılmadı"));
+
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Kurs tapılmadı"));
+
+        if (student.getCourses().contains(course)) {
+            throw new IllegalStateException(
+                    "Tələbə artıq bu kursa yazılıb");
+        }
+
+        Long enrolledCount =
+                studentRepository.countStudentsByCourseId(courseId);
+
+        if (enrolledCount >= course.getCapacity()) {
+            throw new IllegalStateException("Kursda boş yer yoxdur");
+        }
+
+        try {
+            Thread.sleep(delayMs);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(ex);
+        }
+
+        student.addCourse(course);
+
+        return studentMapper.toDetailResponse(student);
+    }
+
+    @Transactional(isolation = org.springframework.transaction.annotation.Isolation.SERIALIZABLE)
+    public StudentResponse enrollWithSerializable(
+            Long studentId,
+            Long courseId,
+            long delayMs) {
+
+        Student student = studentRepository.findByIdWithCourses(studentId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Tələbə tapılmadı"));
+
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Kurs tapılmadı"));
+
+        if (student.getCourses().contains(course)) {
+            throw new IllegalStateException(
+                    "Tələbə artıq bu kursa yazılıb");
+        }
+
+        Long enrolledCount =
+                studentRepository.countStudentsByCourseId(courseId);
+
+        if (enrolledCount >= course.getCapacity()) {
+            throw new IllegalStateException("Kursda boş yer yoxdur");
+        }
+
+        try {
+            Thread.sleep(delayMs);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(ex);
+        }
+
+        student.addCourse(course);
+
+        return studentMapper.toDetailResponse(student);
+    }    
 }

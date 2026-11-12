@@ -1,0 +1,139 @@
+databaseChangeLog:
+
+  # 003-1: Students cedvelinin yaradılması
+  - changeSet:
+      id: 003-1
+      author: Fazil07-M
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: students
+      changes:
+        - createTable:
+            tableName: students
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: surname
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: age
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+
+  # 003-2: Courses cedvelinin yaradılması
+  - changeSet:
+      id: 003-2
+      author: Fazil07-M
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: courses
+      changes:
+        - createTable:
+            tableName: courses
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: title
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: credit
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: teacher
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+
+  # 003-3: ManyToMany elaqesi ucun araliq cedvel
+  - changeSet:
+      id: 003-3
+      author: Fazil07-M
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: student_course
+      changes:
+        - createTable:
+            tableName: student_course
+            columns:
+              - column:
+                  name: student_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: course_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+  # 003-4: Student ucun xarici acar
+  - changeSet:
+      id: 003-4
+      author: Fazil07-M
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: student_course
+            baseColumnNames: student_id
+            referencedTableName: students
+            referencedColumnNames: id
+            constraintName: fk_sc_student
+
+  # 003-5: Course ucun xarici acar
+  - changeSet:
+      id: 003-5
+      author: Fazil07-M
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: student_course
+            baseColumnNames: course_id
+            referencedTableName: courses
+            referencedColumnNames: id
+            constraintName: fk_sc_course
+
+  # 003-6: Eyni telebe-kurs cutunun tekrarlanmasinin qarsisinin alinmasi
+  - changeSet:
+      id: 003-6
+      author: Fazil07-M
+      changes:
+        - addUniqueConstraint:
+            tableName: student_course
+            columnNames: student_id, course_id
+            constraintName: uk_student_course

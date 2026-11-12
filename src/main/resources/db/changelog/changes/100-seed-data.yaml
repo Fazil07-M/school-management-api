@@ -1,0 +1,601 @@
+databaseChangeLog:
+
+  # 100-1: Departments ucun test melumatlari
+  - changeSet:
+      id: 100-1
+      author: Fazil07-M
+      context: dev
+      changes:
+        
+        - insert:
+            tableName: departments
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: IT }
+              - column: { name: location, value: Baku }
+              - column: { name: phone, value: "111-111" }
+
+        - insert:
+            tableName: departments
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: HR }
+              - column: { name: location, value: Ganja }
+              - column: { name: phone, value: "222-222" }
+
+        - insert:
+            tableName: departments
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: Finance }
+              - column: { name: location, value: Baku }
+              - column: { name: phone, value: "333-333" }
+            
+      rollback:
+        - delete:
+            tableName: departments
+            where: id IN (1, 2, 3)
+
+  # 100-2: Employees ucun test melumatlari
+  - changeSet:
+      id: 100-2
+      author: Fazil07-M
+      context: dev
+      changes:
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: Ali }
+              - column: { name: surname, value: Aliyev }
+              - column: { name: salary, valueNumeric: 1500.00 }
+              - column: { name: department_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: Veli }
+              - column: { name: surname, value: Mammadov }
+              - column: { name: salary, valueNumeric: 1200.00 }
+              - column: { name: department_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: Murad }
+              - column: { name: surname, value: Hasanov }
+              - column: { name: salary, valueNumeric: 1800.00 }
+              - column: { name: department_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: name, value: Aysel }
+              - column: { name: surname, value: Aliyeva }
+              - column: { name: salary, valueNumeric: 1100.00 }
+              - column: { name: department_id, valueNumeric: 2 }
+
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: name, value: Leyla }
+              - column: { name: surname, value: Huseynova }
+              - column: { name: salary, valueNumeric: 1300.00 }
+              - column: { name: department_id, valueNumeric: 2 }
+
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: name, value: Nigar }
+              - column: { name: surname, value: Karimova }
+              - column: { name: salary, valueNumeric: 1250.00 }
+              - column: { name: department_id, valueNumeric: 2 }
+
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: name, value: Elvin }
+              - column: { name: surname, value: Rahimov }
+              - column: { name: salary, valueNumeric: 1600.00 }
+              - column: { name: department_id, valueNumeric: 3 }
+
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: name, value: Kamran }
+              - column: { name: surname, value: Ismayilov }
+              - column: { name: salary, valueNumeric: 1700.00 }
+              - column: { name: department_id, valueNumeric: 3 }
+
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: id, valueNumeric: 9 }
+              - column: { name: name, value: Samir }
+              - column: { name: surname, value: Quliyev }
+              - column: { name: salary, valueNumeric: 1400.00 }
+              - column: { name: department_id, valueNumeric: 3 }
+
+        - insert:
+            tableName: employees
+            columns:
+              - column: { name: id, valueNumeric: 10 }
+              - column: { name: name, value: Orxan }
+              - column: { name: surname, value: Abbasov }
+              - column: { name: salary, valueNumeric: 1550.00 }
+              - column: { name: department_id, valueNumeric: 1 }
+
+      rollback:
+        - delete:
+            tableName: employees
+            where: id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+  # 100-3: Courses ucun test melumatlari
+  - changeSet:
+      id: 100-3
+      author: Fazil07-M
+      context: dev
+      changes:
+        - insert:
+            tableName: courses
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: title, value: Java }
+              - column: { name: credit, valueNumeric: 6 }
+              - column: { name: teacher, value: Kamal }
+
+        - insert:
+            tableName: courses
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: title, value: SQL }
+              - column: { name: credit, valueNumeric: 5 }
+              - column: { name: teacher, value: Rashad }
+
+        - insert:
+            tableName: courses
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: title, value: Python }
+              - column: { name: credit, valueNumeric: 5 }
+              - column: { name: teacher, value: Nurlan }
+
+        - insert:
+            tableName: courses
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: title, value: Networking }
+              - column: { name: credit, valueNumeric: 4 }
+              - column: { name: teacher, value: Elchin }
+
+        - insert:
+            tableName: courses
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: title, value: Cybersecurity }
+              - column: { name: credit, valueNumeric: 6 }
+              - column: { name: teacher, value: Farid }
+      rollback:
+        - delete:
+            tableName: courses
+            where: id IN (1, 2, 3, 4, 5)
+
+  # 100-4: Students ucun test melumatlari
+  - changeSet:
+      id: 100-4
+      author: Fazil07-M
+      context: dev
+      changes:
+        - insert:
+            tableName: students
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: Fazil }
+              - column: { name: surname, value: Mammadli }
+              - column: { name: age, valueNumeric: 20 }
+
+        - insert:
+            tableName: students
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: Ali }
+              - column: { name: surname, value: Aliyev }
+              - column: { name: age, valueNumeric: 21 }
+
+        - insert:
+            tableName: students
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: Murad }
+              - column: { name: surname, value: Hasanov }
+              - column: { name: age, valueNumeric: 22 }
+
+        - insert:
+            tableName: students
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: name, value: Aysel }
+              - column: { name: surname, value: Aliyeva }
+              - column: { name: age, valueNumeric: 20 }
+
+        - insert:
+            tableName: students
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: name, value: Leyla }
+              - column: { name: surname, value: Huseynova }
+              - column: { name: age, valueNumeric: 23 }
+
+        - insert:
+            tableName: students
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: name, value: Nigar }
+              - column: { name: surname, value: Karimova }
+              - column: { name: age, valueNumeric: 21 }
+
+        - insert:
+            tableName: students
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: name, value: Elvin }
+              - column: { name: surname, value: Rahimov }
+              - column: { name: age, valueNumeric: 24 }
+
+        - insert:
+            tableName: students
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: name, value: Kamran }
+              - column: { name: surname, value: Ismayilov }
+              - column: { name: age, valueNumeric: 22 }
+
+        - insert:
+            tableName: students
+            columns:
+              - column: { name: id, valueNumeric: 9 }
+              - column: { name: name, value: Samir }
+              - column: { name: surname, value: Quliyev }
+              - column: { name: age, valueNumeric: 20 }
+
+        - insert:
+            tableName: students
+            columns:
+              - column: { name: id, valueNumeric: 10 }
+              - column: { name: name, value: Orxan }
+              - column: { name: surname, value: Abbasov }
+              - column: { name: age, valueNumeric: 23 }
+
+      rollback:
+        - delete:
+            tableName: students
+            where: id IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+  # 100-5: Student ve Course arasinda elaqeler
+  - changeSet:
+      id: 100-5
+      author: Fazil07-M
+      context: dev
+      changes:
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 1 }
+              - column: { name: course_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 1 }
+              - column: { name: course_id, valueNumeric: 2 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 2 }
+              - column: { name: course_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 2 }
+              - column: { name: course_id, valueNumeric: 3 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 3 }
+              - column: { name: course_id, valueNumeric: 2 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 3 }
+              - column: { name: course_id, valueNumeric: 4 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 4 }
+              - column: { name: course_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 5 }
+              - column: { name: course_id, valueNumeric: 5 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 6 }
+              - column: { name: course_id, valueNumeric: 2 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 7 }
+              - column: { name: course_id, valueNumeric: 3 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 8 }
+              - column: { name: course_id, valueNumeric: 4 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 9 }
+              - column: { name: course_id, valueNumeric: 5 }
+
+        - insert:
+            tableName: student_course
+            columns:
+              - column: { name: student_id, valueNumeric: 10 }
+              - column: { name: course_id, valueNumeric: 1 }
+              
+      rollback:
+        - delete:
+            tableName: student_course
+            where: >
+              (student_id = 1 AND course_id = 1) OR
+              (student_id = 1 AND course_id = 2) OR
+              (student_id = 2 AND course_id = 1) OR
+              (student_id = 2 AND course_id = 3) OR
+              (student_id = 3 AND course_id = 2) OR
+              (student_id = 3 AND course_id = 4) OR
+              (student_id = 4 AND course_id = 1) OR
+              (student_id = 5 AND course_id = 5) OR
+              (student_id = 6 AND course_id = 2) OR
+              (student_id = 7 AND course_id = 3) OR
+              (student_id = 8 AND course_id = 4) OR
+              (student_id = 9 AND course_id = 5) OR
+              (student_id = 10 AND course_id = 1)
+
+  # 100-6: Authors ucun test melumatlari
+  - changeSet:
+      id: 100-6
+      author: Fazil07-M
+      context: dev
+      changes:
+        - insert:
+            tableName: authors
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: name, value: George }
+              - column: { name: surname, value: Orwell }
+              - column: { name: country, value: UK }
+
+        - insert:
+            tableName: authors
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: name, value: Fyodor }
+              - column: { name: surname, value: Dostoevsky }
+              - column: { name: country, value: Russia }
+
+        - insert:
+            tableName: authors
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: name, value: Jules }
+              - column: { name: surname, value: Verne }
+              - column: { name: country, value: France }
+
+        - insert:
+            tableName: authors
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: name, value: Agatha }
+              - column: { name: surname, value: Christie }
+              - column: { name: country, value: UK }
+
+        - insert:
+            tableName: authors
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: name, value: Chingiz }
+              - column: { name: surname, value: Aitmatov }
+              - column: { name: country, value: Kyrgyzstan }
+
+      rollback:
+        - delete:
+            tableName: authors
+            where: id IN (1, 2, 3, 4, 5)
+
+  # 100-7: Books ucun test melumatlari
+  - changeSet:
+      id: 100-7
+      author: Fazil07-M
+      context: dev
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: title, value: "1984" }
+              - column: { name: price, valueNumeric: 18.50 }
+              - column: { name: page_count, valueNumeric: 328 }
+
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: title, value: "Animal Farm" }
+              - column: { name: price, valueNumeric: 12.00 }
+              - column: { name: page_count, valueNumeric: 112 }
+
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: title, value: "Crime and Punishment" }
+              - column: { name: price, valueNumeric: 20.00 }
+              - column: { name: page_count, valueNumeric: 671 }
+
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: title, value: "The Idiot" }
+              - column: { name: price, valueNumeric: 17.50 }
+              - column: { name: page_count, valueNumeric: 656 }
+
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: title, value: "Around the World in 80 Days" }
+              - column: { name: price, valueNumeric: 15.00 }
+              - column: { name: page_count, valueNumeric: 256 }
+
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: title, value: "Murder on the Orient Express" }
+              - column: { name: price, valueNumeric: 16.00 }
+              - column: { name: page_count, valueNumeric: 274 }
+
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: title, value: "The White Ship" }
+              - column: { name: price, valueNumeric: 11.00 }
+              - column: { name: page_count, valueNumeric: 160 }
+
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: title, value: "Jamila" }
+              - column: { name: price, valueNumeric: 13.00 }
+              - column: { name: page_count, valueNumeric: 120 }
+
+      rollback:
+        - delete:
+            tableName: books
+            where: id IN (1, 2, 3, 4, 5, 6, 7, 8)
+
+  # 100-8: Author ve Book arasinda elaqeler
+  - changeSet:
+      id: 100-8
+      author: Fazil07-M
+      context: dev
+      changes:
+        - insert:
+            tableName: author_book
+            columns:
+              - column: { name: id, valueNumeric: 1 }
+              - column: { name: author_id, valueNumeric: 1 }
+              - column: { name: book_id, valueNumeric: 1 }
+
+        - insert:
+            tableName: author_book
+            columns:
+              - column: { name: id, valueNumeric: 2 }
+              - column: { name: author_id, valueNumeric: 1 }
+              - column: { name: book_id, valueNumeric: 2 }
+
+        - insert:
+            tableName: author_book
+            columns:
+              - column: { name: id, valueNumeric: 3 }
+              - column: { name: author_id, valueNumeric: 2 }
+              - column: { name: book_id, valueNumeric: 3 }
+
+        - insert:
+            tableName: author_book
+            columns:
+              - column: { name: id, valueNumeric: 4 }
+              - column: { name: author_id, valueNumeric: 2 }
+              - column: { name: book_id, valueNumeric: 4 }
+
+        - insert:
+            tableName: author_book
+            columns:
+              - column: { name: id, valueNumeric: 5 }
+              - column: { name: author_id, valueNumeric: 3 }
+              - column: { name: book_id, valueNumeric: 5 }
+
+        - insert:
+            tableName: author_book
+            columns:
+              - column: { name: id, valueNumeric: 6 }
+              - column: { name: author_id, valueNumeric: 4 }
+              - column: { name: book_id, valueNumeric: 6 }
+
+        - insert:
+            tableName: author_book
+            columns:
+              - column: { name: id, valueNumeric: 7 }
+              - column: { name: author_id, valueNumeric: 5 }
+              - column: { name: book_id, valueNumeric: 7 }
+
+        - insert:
+            tableName: author_book
+            columns:
+              - column: { name: id, valueNumeric: 8 }
+              - column: { name: author_id, valueNumeric: 5 }
+              - column: { name: book_id, valueNumeric: 8 }
+
+      rollback:
+        - delete:
+            tableName: author_book
+            where: id IN (1, 2, 3, 4, 5, 6, 7, 8)
+
+  # 100-9: Identity sequence-lerin sinxronlasdirilmasi
+  - changeSet:
+      id: 100-9
+      author: Fazil07-M
+      context: dev
+      changes:
+        - sql:
+            sql: |
+              SELECT setval(pg_get_serial_sequence('departments', 'id'), (SELECT MAX(id) FROM departments));
+              SELECT setval(pg_get_serial_sequence('employees', 'id'), (SELECT MAX(id) FROM employees));
+              SELECT setval(pg_get_serial_sequence('courses', 'id'), (SELECT MAX(id) FROM courses));
+              SELECT setval(pg_get_serial_sequence('students', 'id'), (SELECT MAX(id) FROM students));
+              SELECT setval(pg_get_serial_sequence('authors', 'id'), (SELECT MAX(id) FROM authors));
+              SELECT setval(pg_get_serial_sequence('books', 'id'), (SELECT MAX(id) FROM books));
+              SELECT setval(pg_get_serial_sequence('author_book', 'id'), (SELECT MAX(id) FROM author_book));
+
+      rollback:
+        - sql:
+            sql: |
+              SELECT setval(pg_get_serial_sequence('departments', 'id'), 1, false);
+              SELECT setval(pg_get_serial_sequence('employees', 'id'), 1, false);
+              SELECT setval(pg_get_serial_sequence('courses', 'id'), 1, false);
+              SELECT setval(pg_get_serial_sequence('students', 'id'), 1, false);
+              SELECT setval(pg_get_serial_sequence('authors', 'id'), 1, false);
+              SELECT setval(pg_get_serial_sequence('books', 'id'), 1, false);
+              SELECT setval(pg_get_serial_sequence('author_book', 'id'), 1, false);              

@@ -1,3 +1,4 @@
+
 package az.iktex.organization.structure.testders.service;
 
 import az.iktex.organization.structure.testders.dto.request.BookRequest;
@@ -13,9 +14,11 @@ import az.iktex.organization.structure.testders.repository.BookRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -66,12 +69,21 @@ public class BookService {
                 bookRepository.findByTitleContainingIgnoreCase(title));
     }
 
+    // Verilmiş qiymətdən ucuz kitabları qiymətə görə sıralayır.
+    public List<BookResponse> getBooksCheaperThan(BigDecimal price) {
+
+        return bookMapper.toResponseList(
+                bookRepository.findByPriceLessThan(
+                        price,
+                        Sort.by(Sort.Direction.ASC, "price")
+                ));
+    }
 
     // Kitab məlumatlarını yeniləyir.
     @Transactional
     public BookResponse updateBook(Long id, BookRequest request) {
 
-        Book book = bookRepository.findById(id)
+        Book book = bookRepository.findByIdWithAuthors(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Kitab tapılmadı"));
 
@@ -83,7 +95,7 @@ public class BookService {
 
         bookMapper.updateEntity(request, book);
 
-        return bookMapper.toResponse(book);
+        return bookMapper.toDetailResponse(book);
     }
 
     // Müəllifi kitaba əlavə edir.
