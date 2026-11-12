@@ -3,7 +3,7 @@ package az.iktex.organization.structure.testders.controller;
 import az.iktex.organization.structure.testders.dto.request.EmployeeRequest;
 import az.iktex.organization.structure.testders.dto.response.EmployeeResponse;
 import az.iktex.organization.structure.testders.service.EmployeeService;
-
+import az.iktex.organization.structure.testders.dto.request.EmployeeTransferRequest;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -86,6 +86,21 @@ public class EmployeeController {
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
 
         employeeService.deleteEmployee(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    // İşçini başqa şöbəyə keçirir və maaşını artırır.
+    @PostMapping("/{id}/transfer")
+    public ResponseEntity<Void> transferEmployee(
+            @PathVariable Long id,
+            @RequestBody EmployeeTransferRequest request) {
+
+        employeeService.transfer(
+                id,
+                request.departmentId(),
+                request.raisePercent()
+        );
 
         return ResponseEntity.noContent().build();
     }

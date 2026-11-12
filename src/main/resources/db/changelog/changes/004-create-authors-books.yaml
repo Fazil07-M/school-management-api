@@ -1,0 +1,155 @@
+databaseChangeLog:
+
+  # 004-1: Authors cedvelinin yaradılması
+  - changeSet:
+      id: 004-1
+      author: Fazil07-M
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: authors
+      changes:
+        - createTable:
+            tableName: authors
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: surname
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: country
+                  type: VARCHAR(50)
+
+  # 004-2: Books cedvelinin yaradılması
+  - changeSet:
+      id: 004-2
+      author: Fazil07-M
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: books
+      changes:
+        - createTable:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: title
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: price
+                  type: NUMERIC(8,2)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: page_count
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+
+  # 004-3: AuthorBook elaqe cedvelinin yaradılması
+  - changeSet:
+      id: 004-3
+      author: Fazil07-M
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: author_book
+      changes:
+        - createTable:
+            tableName: author_book
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: author_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: book_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+  # 004-4: Author ucun xarici acar
+  - changeSet:
+      id: 004-4
+      author: Fazil07-M
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: author_book
+            baseColumnNames: author_id
+            referencedTableName: authors
+            referencedColumnNames: id
+            constraintName: fk_ab_author
+
+  # 004-5: Book ucun xarici acar
+  - changeSet:
+      id: 004-5
+      author: Fazil07-M
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: author_book
+            baseColumnNames: book_id
+            referencedTableName: books
+            referencedColumnNames: id
+            constraintName: fk_ab_book
+
+  # 004-6: Eyni muellif-kitab cutunun tekrarlanmasinin qarsisinin alinmasi
+  - changeSet:
+      id: 004-6
+      author: Fazil07-M
+      changes:
+        - addUniqueConstraint:
+            tableName: author_book
+            columnNames: author_id, book_id
+            constraintName: uk_author_book
+
+  # 004-7: Kitabin qiymetinin menfi olmamasi ucun CHECK mehdudiyyeti
+  - changeSet:
+      id: 004-7
+      author: Fazil07-M
+      changes:
+        - sql:
+            sql: ALTER TABLE books ADD CONSTRAINT chk_book_price CHECK (price >= 0);
+      rollback:
+        - sql:
+            sql: ALTER TABLE books DROP CONSTRAINT chk_book_price;

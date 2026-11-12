@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-1
+      author: Fazil07-M
+      changes:
+        - tagDatabase:
+            tag: v1.0

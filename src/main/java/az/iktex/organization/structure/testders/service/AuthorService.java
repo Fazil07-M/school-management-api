@@ -1,9 +1,15 @@
+
 package az.iktex.organization.structure.testders.service;
 
 import az.iktex.organization.structure.testders.dto.request.AuthorRequest;
 import az.iktex.organization.structure.testders.dto.response.AuthorResponse;
+import az.iktex.organization.structure.testders.dto.response.BookResponse;
+
 import az.iktex.organization.structure.testders.entity.Author;
+
 import az.iktex.organization.structure.testders.mapper.AuthorMapper;
+import az.iktex.organization.structure.testders.mapper.BookMapper;
+
 import az.iktex.organization.structure.testders.repository.AuthorRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +27,7 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
     private final AuthorMapper authorMapper;
+    private final BookMapper bookMapper;
 
     // Yeni müəllif yaradır.
     @Transactional
@@ -36,7 +43,7 @@ public class AuthorService {
     // ID üzrə müəllifi tapır.
     public AuthorResponse getAuthorById(Long id) {
 
-        Author author = authorRepository.findByIdWithBooks(id)
+        Author author = authorRepository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Müəllif tapılmadı"));
 
@@ -61,6 +68,19 @@ public class AuthorService {
 
         return authorMapper.toResponseList(
                 authorRepository.findByAuthorBooksIsEmpty());
+    }
+
+    // Müəllifin kitablarını qaytarır.
+    public List<BookResponse> getBooksByAuthor(Long authorId) {
+
+        Author author = authorRepository.findByIdWithBooks(authorId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Müəllif tapılmadı"));
+
+        return author.getAuthorBooks().stream()
+                .map(authorBook ->
+                        bookMapper.toResponse(authorBook.getBook()))
+                .toList();
     }
 
     // Müəllif məlumatlarını yeniləyir.

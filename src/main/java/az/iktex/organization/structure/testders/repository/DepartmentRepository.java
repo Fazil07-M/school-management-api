@@ -3,7 +3,7 @@ import az.iktex.organization.structure.testders.entity.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +28,14 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
            """)
     Integer countEmployeesByDepartmentId(@Param("id") Long id);
 
+
+       @Query("""
+              SELECT AVG(e.salary)
+              FROM Employee e
+              WHERE e.department.id = :departmentId
+              """)
+       BigDecimal findAverageSalaryByDepartmentId(
+              @Param("departmentId") Long departmentId);
 
     
 }
